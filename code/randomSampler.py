@@ -1,3 +1,13 @@
+"""
+Script for random sampling 2,000 participants from a total of 3,821 participants with high 
+myopia in at least one eye in the UK Biobank, as detailed in Figure 1 of the manuscript.
+
+Author : Fabian Yii
+Email  : fabian.yii@ed.ac.uk or fslyii@hotmail.com
+
+2024
+"""
+
 import os
 import numpy as np
 import pandas as pd
