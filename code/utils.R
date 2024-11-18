@@ -1,8 +1,9 @@
-################################################################
-#                       USEFUL FUNCTIONS                       #
-#                          Fabian Yii                          #
-#                     fabian.yii@ed.ac.uk                      #
-################################################################
+##############################################################
+# Script defining the various functions used in "analysis.R  #
+##############################################################
+# Author : Fabian Yii                          
+# Email  : fabian.yii@ed.ac.uk or fslyii@hotmail.com                       
+# 2024
 
 
 
@@ -60,21 +61,27 @@ createQuantiles <- function(data, variable){
 ## FUNCTION 3: Compute and print prevalence ± 95% CI by "group".
 ##   Return dataframe with new columns added indicating the
 ##   group-specific estimated prevalence ± 95% CI.
-printPrevalence <- function(data, group){
-  data$group  <- factor(group)
-  data$PMprev <- NA
+printPrevalence <- function(data, group, Npop, eyeLevel){
+  data$group       <- factor(group)
+  data$PMprev      <- NA
   data$PMprevLower <- NA
   data$PMprevUpper <- NA
   for(i in levels(data$group)){
-    N_cases   <- sum(data[which(data$group == i),]$PMbinary_eyeLevel)
-    N_all     <- sum(data$group == i)
-    tmp       <- as.matrix(cbind(N_cases, N_all))
-    prev      <- epi.conf(tmp, 
-                          ctype      ="prevalence", 
-                          method     = "exact", 
-                          N          = Npop, 
-                          design     = 1, 
-                          conf.level = 0.95) * 100
+    if(eyeLevel){
+      N_cases    <- sum(data[which(data$group == i),]$PMbinary_eyeLevel)
+      N_all      <- sum(data$group == i)
+    } else{
+      uniqueData <- data[!duplicated(data$id) & data$group==i,]
+      N_cases    <- sum(uniqueData$PMbinary_individualLevel)
+      N_all      <- nrow(uniqueData)
+    }
+    tmp         <- as.matrix(cbind(N_cases, N_all))
+    prev        <- epi.conf(tmp, 
+                            ctype      ="prevalence", 
+                            method     = "exact", 
+                            N          = Npop, 
+                            design     = 1, 
+                            conf.level = 0.95) * 100
     print(paste0("PM prevalence is ", 
                  round(prev[[1]],1), "% [", 
                  round(prev[[2]],1), " to ", 
@@ -90,14 +97,12 @@ printPrevalence <- function(data, group){
 
 
 ## FUNCTION 4: Compute, print and plot prevalence ± 95% CI by interaction group.
-plotInteraction <- function(data, group1, group2, Npop, legendTitle, ylim = c(20,80), xlab = "\nSpherical equivalent refraction", ylab = "Prevalence (%)\n"){
+plotInteraction <- function(data, group1, group2, NpopEyes, legendTitle, ylim = c(20,80), xlab = "\nSpherical equivalent refraction", ylab = "Prevalence (%)\n"){
   
-  # Compute and print overall prevalence and prevalence by interaction group
-  print("===================== Overall =====================")
-  resultPlaceholder <- printPrevalence(data, group2)
+  # Compute and print prevalence by interaction group
   print("=============== By interaction group ==============")
   data$interacted   <- interaction(group1, group2)
-  data              <- printPrevalence(data, data$interacted)
+  data              <- printPrevalence(data, data$interacted, NpopEyes, eyeLevel = TRUE)
   
   # PLOT
   bgCol     <- rgb(0.6,0.1,0, alpha=0.01)
@@ -148,9 +153,9 @@ plotInteraction <- function(data, group1, group2, Npop, legendTitle, ylim = c(20
 
 
 
-## FUNCTION 5: Given an independent variable, fit and display a univariable 
-##   random-effects logistic regression model, with pathologic myopia as
-##   the dependent variable. 
+## FUNCTION 5: Fit and display a random-effects logistic regression model, 
+##   with "variable" as the independent variable and pathologic myopia as
+##   the dependent variable, controlling for SER, age and sex. 
 fitModel <- function(data, variable, scale=TRUE){
   # If scaling is required
   if(scale){
@@ -172,21 +177,4 @@ fitModel <- function(data, variable, scale=TRUE){
                                         optCtrl   = list(maxfun=2e5)) )
   return(tab_model(model))
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
