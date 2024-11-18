@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 join = os.path.join
-df = pd.read_csv("cleaned_data_long_PM_cohort.csv")
+df   = pd.read_csv("cleaned_data_long_PM_cohort.csv")
 
 # Only include eyes with high myopia (SER <= -5)
-HM = df[df.SER <= -5]
-HM = HM.sample(frac=1) # shuffle rows
+HM    = df[df.SER <= -5]
+HM    = HM.sample(frac=1) # shuffle rows
 HMids = np.unique(df[df.SER <= -5].id)
 print(len(HM), "eyes of", len(HMids), "unique participants had high myopia") # 3821 participants had high myopia in at least one eye
 
