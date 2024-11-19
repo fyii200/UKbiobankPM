@@ -73,7 +73,7 @@ d[is.na(d$hypertensionCombined),]$hypertensionCombined <- d[is.na(d$hypertension
 
 # Diabetes defined based on linked healthcare data and random glucose (mmol/L) 
 # Cut-off: 200 mg/dL (200*0.0555 = 11.1mmol/L)
-d$diabetesCombined                                     <- d$glucose>11.1 | d$diabetes
+d$diabetesCombined                                     <- d$glucose > 11.1 | d$diabetes
 d[is.na(d$diabetesCombined),]$diabetesCombined         <- d[is.na(d$diabetesCombined),]$diabetes
 
 
