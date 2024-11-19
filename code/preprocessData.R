@@ -166,7 +166,7 @@ for(i in 1:nrow(cleanData)){
   } else{
     cleanData$finalStaphyloma[i] <- "Need adjudication" } }
 
-# Create new labels indicating the presence of MM, any of the 3 plus lesion(s) and staphyloma, and PM
+# Create new labels indicating the presence of MM, plus lesion(s)/staphyloma and PM
 cleanData$finalMMbinary          <- ifelse(cleanData$finalMM != "No MM - 0" & cleanData$finalMM != "Fundus tessellation only - 1", TRUE, FALSE)
 cleanData$finalPlusLesionBinary  <- ifelse(cleanData$finalMyopicCNV == "no" & cleanData$finalFS == "no" & cleanData$finalLC == "no" & cleanData$finalStaphyloma == "no", FALSE, TRUE)
 cleanData$PMbinary_eyeLevel      <- cleanData$finalMMbinary | cleanData$finalPlusLesionBinary
