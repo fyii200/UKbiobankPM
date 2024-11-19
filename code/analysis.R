@@ -179,22 +179,23 @@ fig3C                                                        <- plotInteraction(
 combinedPlot <- cowplot::plot_grid(fig2A, fig2B, fig2C, fig2D, ncol = 2, axis = "tblr", align = "v")
 ggdraw() + 
   draw_plot(combinedPlot) + 
-  draw_label("SER (D)", x = 0.5, y = 0, vjust = -0.5, angle = 0, size = 15, fontface = "bold", fontfamily = "Times New Roman") +
-  draw_label("Pevalence (%)", x = 0, y = 0.5, vjust = 1.2, angle = 90, size = 15, fontface = "bold", fontfamily = "Times New Roman") 
+  draw_label("SER (D)", x = 0.5, y = 0, vjust = -0.5, angle = 0, size = 15, fontface = "bold") +
+  draw_label("Pevalence (%)", x = 0, y = 0.5, vjust = 1.2, angle = 90, size = 15, fontface = "bold") 
 ggsave(file.path(projectDir, "figures", "fig2.png"), width = 10.5, height = 8)
 
 # Combined plot (Figure 3): stratified by fundus biomarkers
 combinedPlot <- cowplot::plot_grid(fig3A, fig3B, fig3C, ncol = 1, axis = "tblr", align = "v")
 ggdraw() + 
   draw_plot(combinedPlot) + 
-  draw_label("SER (D)", x = 0.5, y = 0, vjust = -0.4, angle = 0, size = 15, fontface = "bold", fontfamily = "Times New Roman") +
-  draw_label("Pevalence (%)", x = 0, y = 0.5, vjust = 1.2, angle = 90, size = 15, fontface = "bold", fontfamily = "Times New Roman")
+  draw_label("SER (D)", x = 0.5, y = 0, vjust = -0.4, angle = 0, size = 15, fontface = "bold") +
+  draw_label("Pevalence (%)", x = 0, y = 0.5, vjust = 1.2, angle = 90, size = 15, fontface = "bold")
 ggsave(file.path(projectDir, "figures", "fig3.png"), width = 7, height = 10)
 
 
 
 ##### Risk factors and fundus biomarkers
 # Baseline model (SER, age & sex)
+sample$sex    <- relevel(factor(sample$sex), "Male") # Male as reference
 baselineModel <- glmer(PMbinary_eyeLevel ~ 
                          scale(SER) + 
                          scale(age) + 
@@ -205,12 +206,12 @@ baselineModel <- glmer(PMbinary_eyeLevel ~
 tab_model(baselineModel)
 
 # Demographic & lifestyle factors
+fitModel(sample, "alcoholFreqBin")              # Alcohol consumption
 fitModel(sample, "townsend")                    # Townsend deprivation index    
 fitModel(sample, "ethnicBinary")                # Ethnic group
 fitModel(sample, "smokeBinary")                 # Smoking status
 fitModel(sample, "eduBinary")                   # Highest education level
 fitModel(sample, "sleepDuration")               # Sleep duration
-fitModel(sample, "alcoholFreqBin")              # Alcohol consumption
 
 # General health indicators
 fitModel(sample, "hypertensionCombined")        # Hypertension
