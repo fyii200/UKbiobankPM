@@ -38,7 +38,7 @@ d$eduBinary        <- factor(ifelse(d$edu == "College or University degree" | d$
 d$ethnic           <- ifelse(d$ethnic == "Indian" | d$ethnic == "Pakistani", "Indian/Pakistani", d$ethnic)                      
 
 # Binarise ethnicity into "White" and "non-White"
-d$ethnicBinary     <- ifelse(d$ethnic=="British" | d$ethnic=="Irish" | d$ethnic=="White" | d$ethnic=="Any other white background", "White", "non-White")
+d$ethnicBinary     <- ifelse(d$ethnic == "British" | d$ethnic == "Irish" | d$ethnic == "White" | d$ethnic == "Any other white background", "White", "non-White")
 
 
 
