@@ -7,12 +7,40 @@
 
 
 
-## FUNCTION 1: print summary statistics (mean ± SD for continuous variables).
-##   Eye-level variables are summarised at eye level, while person-specific
-##   variables are summarised at individual level.
+# FUNCTION 1: print summary statistics (mean ± SD for continuous variables) for a hardcoded set of variables. Individual- (eye-) level variables are summarised at the individual (eye) level.
+# data     : A dataframe containing the hardcorded set of variables.
+# @Return Summary statistics for age, sex, townsend deprivation index, ethnicity, smoking status, alcohol consumption, sleep duration, 
+#         cardiovascular disease status, diabetes status, body mass index, total cholesterol, spherical equivalent refraction,
+#         glaucoma status, visual acuity, intraocular pressure, vessel fractal dimension, temporal arterial/venous concavity, 
+#         retinal arteriovenous ratio, optic disc tilt and optic disc orientation. 
 printSummary <- function(data){
-  IndividualVariables <- c("age", "sex", "townsend", "eduBinary", "ethnicBinary", "smokeBinary", "alcoholFreqBin", "sleepDuration", "hypertension", "cardiovascularDisease", "diabetes", "BMI", "totalCholesterol")
-  eyeVariables        <- c("SER", "glaucoma", "VA", "IOP", "FD_combined", "Tortuosity_density_combined", "conc_rp_artery", "conc_rp_vein", "AVR", "ODtilt", "horODorientation")
+
+  # Summarise at the individual level
+  IndividualVariables <- c("age", 
+                           "sex", 
+                           "townsend", 
+                           "eduBinary", 
+                           "ethnicBinary", 
+                           "smokeBinary", 
+                           "alcoholFreqBin", 
+                           "sleepDuration", 
+                           "hypertension", 
+                           "cardiovascularDisease", 
+                           "diabetes", 
+                           "BMI", 
+                           "totalCholesterol")
+  # Summarise at the eye level
+  eyeVariables        <- c("SER", 
+                           "glaucoma", 
+                           "VA", 
+                           "IOP", 
+                           "FD_combined", 
+                           "Tortuosity_density_combined", 
+                           "conc_rp_artery", 
+                           "conc_rp_vein", 
+                           "AVR", 
+                           "ODtilt", 
+                           "horODorientation")
   
   # If person-level variable make sure only one row is included
   for(i in IndividualVariables){
@@ -40,9 +68,15 @@ printSummary <- function(data){
 
 
 
-## FUNCTION 2: Divide continuous variable into quantiles.
-##   Return dataframe with a new column indicating quantile membership.
-createQuantiles <- function(data, variable){
+# FUNCTION 2: Categorise a specified continuous variable into quantiles.
+#             Return dataframe with new columns added indicating the
+#             group-specific estimated prevalence ± 95% CI.
+# data     : A dataframe containing the variable to be quantised.
+# variable : A vector of length = nrow(data) containing the values of the continuous (numeric) variable to be quantised.
+# @Return A modified "data" dataframe with an integer indicating the quantile assigned to each observation.  
+createQuantiles <- function(data, 
+                            variable){
+  
   data$group <- 1
   quantiles <- quantile(variable, seq(0.25, 0.75, 0.25), na.rm=TRUE)
   for(i in 2:4){
@@ -106,7 +140,7 @@ printPrevalence <- function(data,
 
 
 # FUNCTION 4: Compute, print and plot prevalence ± 95% CI by interaction group (interaction between variable 1 & variable 2).
-# data        : A dataframe with pathologic myopia label for each observation.
+# data        : A dataframe containing "variable1" value, "variable2" value and pathologic myopia label for each observation.
 # group1      : A vector of length = nrow(data) indicating the group membership (based on variable 1) of each observation.
 # group2      : A vector of length = nrow(data) indicating the group membership (based on variable 2) of each observation.
 # NpopEyes    : An integer indicating the total number of eyes in the population. 
@@ -186,6 +220,7 @@ plotInteraction <- function(data,
 fitModel <- function(data, 
                      variable, 
                      scale = TRUE){
+  
   # If scaling is required
   if(scale){
     # Apply scaling if variable is numeric
