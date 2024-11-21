@@ -10,7 +10,7 @@ An overview of the workflow is provided below:
 
 3. analysis.R       : R script for performing the main analysis (prevalence estimates and logistic regression).
 
-*utils.R* is a non-executable R script containing various functions used in 'analysis.R'.
+Note: 'utils.R' is a non-executable R script containing various functions used in 'analysis.R'.
 </pre>
 
 *PS: Source code for deriving fundus imaging features is available [elsewhere](https://github.com/fyii200/MyopiaRetinalFeatures).*
