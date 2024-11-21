@@ -11,9 +11,6 @@ Email  : fabian.yii@ed.ac.uk or fslyii@hotmail.com
 import os
 import numpy as np
 import pandas as pd
-import cv2 as cv
-import matplotlib.pyplot as plt
-from tqdm import tqdm
 
 join = os.path.join
 df   = pd.read_csv("cleaned_data_long_PM_cohort.csv")
