@@ -119,13 +119,13 @@ printPrevalence <- function(data,
       N_cases    <- sum(uniqueData$PMbinary_individualLevel)
       N_all      <- nrow(uniqueData)
     }
-    tmp         <- as.matrix(cbind(N_cases, N_all))
-    prev        <- epi.conf(tmp, 
-                            ctype      ="prevalence", 
-                            method     = "exact", 
-                            N          = Npop, 
-                            design     = 1, 
-                            conf.level = 0.95) * 100
+    tmp          <- as.matrix(cbind(N_cases, N_all))
+    prev         <- epi.conf(tmp, 
+                             ctype      ="prevalence", 
+                             method     = "exact", 
+                             N          = Npop, 
+                             design     = 1, 
+                             conf.level = 0.95) * 100
     print(paste0("PM prevalence is ", 
                  round(prev[[1]],1), "% [", 
                  round(prev[[2]],1), " to ", 
