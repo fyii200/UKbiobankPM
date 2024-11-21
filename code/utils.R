@@ -7,8 +7,9 @@
 
 
 
-# FUNCTION 1: print summary statistics (mean ± SD for continuous variables) for a hardcoded set of variables. Individual- (eye-) level variables are summarised at the individual (eye) level.
-# data     : A dataframe containing the hardcorded set of variables.
+# FUNCTION 1 : print summary statistics (mean ± SD for continuous variables) for a hardcoded set of variables. 
+              Individual- (eye-) level variables are summarised at the individual (eye) level.
+# data : A dataframe containing the hardcorded set of variables.
 # @Return Summary statistics for age, sex, townsend deprivation index, ethnicity, smoking status, alcohol consumption, sleep duration, 
 #         cardiovascular disease status, diabetes status, body mass index, total cholesterol, spherical equivalent refraction,
 #         glaucoma status, visual acuity, intraocular pressure, vessel fractal dimension, temporal arterial/venous concavity, 
@@ -68,9 +69,9 @@ printSummary <- function(data){
 
 
 
-# FUNCTION 2: Categorise a specified continuous variable into quantiles.
-#             Return dataframe with new columns added indicating the
-#             group-specific estimated prevalence ± 95% CI.
+# FUNCTION 2 : Categorise a specified continuous variable into quantiles.
+#              Return dataframe with new columns added indicating the
+#              group-specific estimated prevalence ± 95% CI.
 # data     : A dataframe containing the variable to be quantised.
 # variable : A vector of length = nrow(data) containing the values of the continuous (numeric) variable to be quantised.
 # @Return A modified "data" dataframe with an integer indicating the quantile assigned to each observation.  
@@ -92,9 +93,9 @@ createQuantiles <- function(data,
 
 
 
-# FUNCTION 3: Compute and print prevalence ± 95% CI by "group".
-#             Return dataframe with new columns added indicating the
-#             group-specific estimated prevalence ± 95% CI.
+# FUNCTION 3 : Compute and print prevalence ± 95% CI by "group".
+#              Return dataframe with new columns added indicating the
+#              group-specific estimated prevalence ± 95% CI.
 # data     : A dataframe with pathologic myopia label for each observation.
 # group    : A vector of length = nrow(data) indicating the group membership of each observation.
 # Npop     : An integer indicating the total number of observations in the population. This will be the total number of eyes (individuals) for individual- (eye-) level variables.
@@ -139,7 +140,7 @@ printPrevalence <- function(data,
 
 
 
-# FUNCTION 4: Compute, print and plot prevalence ± 95% CI by interaction group (interaction between variable 1 & variable 2).
+# FUNCTION 4 : Compute, print and plot prevalence ± 95% CI by interaction group (interaction between variable 1 & variable 2).
 # data        : A dataframe containing "variable1" value, "variable2" value and pathologic myopia label for each observation.
 # group1      : A vector of length = nrow(data) indicating the group membership (based on variable 1) of each observation.
 # group2      : A vector of length = nrow(data) indicating the group membership (based on variable 2) of each observation.
@@ -212,7 +213,7 @@ plotInteraction <- function(data,
 
 
 
-# FUNCTION 5: Fit and display a multivariable mixed-effects (random-intercept) logistic regression model, controlling for spherical equivalent refraction, age and sex. 
+# FUNCTION 5 : Fit and display a multivariable mixed-effects (random-intercept) logistic regression model, controlling for spherical equivalent refraction, age and sex. 
 # data     : A dataframe with pathologic myopia label for each observation.
 # variable : A string indicating the name of the independent variable as found in "data". 
 # scale    : A boolean indicating whether the independent variable (only if it is numeric) and continuous (numeric) covariates should be normalised to have zero mean and unit variance.
