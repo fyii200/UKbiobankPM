@@ -58,10 +58,19 @@ createQuantiles <- function(data, variable){
 
 
 
-## FUNCTION 3: Compute and print prevalence ± 95% CI by "group".
-##   Return dataframe with new columns added indicating the
-##   group-specific estimated prevalence ± 95% CI.
-printPrevalence <- function(data, group, Npop, eyeLevel){
+# FUNCTION 3: Compute and print prevalence ± 95% CI by "group".
+#             Return dataframe with new columns added indicating the
+#             group-specific estimated prevalence ± 95% CI.
+# data     : A dataframe with pathologic myopia label for each observation.
+# group    : A vector of length = nrow(data) indicating the group membership of each observation.
+# Npop     : An integer indicating the total number of observations in the population. This will be the total number of eyes (individuals) for individual- (eye-) level variables.
+# eyeLevel : Boolean indicating whether the grouping variable is an eye-level variable (e.g. refractive error). 
+# @Return A modified "data" dataframe with the estimated prevalence ± 95% CI added to each observation.
+printPrevalence <- function(data, 
+                            group, 
+                            Npop, 
+                            eyeLevel){
+  
   data$group       <- factor(group)
   data$PMprev      <- NA
   data$PMprevLower <- NA
@@ -96,8 +105,24 @@ printPrevalence <- function(data, group, Npop, eyeLevel){
 
 
 
-## FUNCTION 4: Compute, print and plot prevalence ± 95% CI by interaction group.
-plotInteraction <- function(data, group1, group2, NpopEyes, legendTitle, ylim = c(20,80), xlab = "\nSpherical equivalent refraction", ylab = "Prevalence (%)\n"){
+# FUNCTION 4: Compute, print and plot prevalence ± 95% CI by interaction group (interaction between variable 1 & variable 2).
+# data        : A dataframe with pathologic myopia label for each observation.
+# group1      : A vector of length = nrow(data) indicating the group membership (based on variable 1) of each observation.
+# group2      : A vector of length = nrow(data) indicating the group membership (based on variable 2) of each observation.
+# NpopEyes    : An integer indicating the total number of eyes in the population. 
+# legendTitle : A string indicating the title of the figure legend.
+# ylim        : A vector of two integers indicating y-axis limits.
+# xlab        : A string indicating the label for the x-axis.
+# ylab        : A string indicating the label for the y-axis.
+# @Return A plot displaying the prevalence ± 95% CI of pathologic myopia stratified by the interaction between "group1" & "group2".
+plotInteraction <- function(data, 
+                            group1, 
+                            group2, 
+                            NpopEyes, 
+                            legendTitle, 
+                            ylim = c(20,80), 
+                            xlab = "\nSpherical equivalent refraction", 
+                            ylab = "Prevalence (%)\n"){
   
   # Compute and print prevalence by interaction group
   print("=============== By interaction group ==============")
@@ -153,10 +178,14 @@ plotInteraction <- function(data, group1, group2, NpopEyes, legendTitle, ylim = 
 
 
 
-## FUNCTION 5: Fit and display a random-effects logistic regression model, 
-##   with "variable" as the independent variable and pathologic myopia as
-##   the dependent variable, controlling for SER, age and sex. 
-fitModel <- function(data, variable, scale=TRUE){
+# FUNCTION 5: Fit and display a multivariable mixed-effects (random-intercept) logistic regression model, controlling for spherical equivalent refraction, age and sex. 
+# data     : A dataframe with pathologic myopia label for each observation.
+# variable : A string indicating the name of the independent variable as found in "data". 
+# scale    : A boolean indicating whether the independent variable (only if it is numeric) and continuous (numeric) covariates should be normalised to have zero mean and unit variance.
+# @Return A table showing the regression results.
+fitModel <- function(data, 
+                     variable, 
+                     scale = TRUE){
   # If scaling is required
   if(scale){
     # Apply scaling if variable is numeric
