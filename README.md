@@ -4,13 +4,13 @@
 An overview of the workflow is provided below:
 
 <pre>
-1. randomSampler.py : Python script for randomly sampling 2,000 participants in the UK Biobank with high myopia (spherical equivalent refraction ≤ -5D) in at least one eye.
+randomSampler.py : Python script for randomly sampling 2,000 participants in the UK Biobank with high myopia (spherical equivalent refraction ≤ -5D) in at least one eye.
 
-2. preprocessData.R : R script for preprocessing relevant variables (explored risk factors, fundus imaging features & pathologic myopia labels) analysed in the study.
+preprocessData.R : R script for preprocessing relevant variables (explored risk factors, fundus imaging features & pathologic myopia labels) analysed in the study.
 
-3. analysis.R       : R script for performing the main analysis (prevalence estimates and logistic regression).
+analysis.R       : R script for performing the main analysis (prevalence estimates and logistic regression).
 
-Note: 'utils.R' is a non-executable R script containing various functions used in 'analysis.R'.
+utils.R          : Non-executable R script containing various functions used in 'analysis.R'.
 </pre>
 
 *PS: Source code for deriving fundus imaging features is available [elsewhere](https://github.com/fyii200/MyopiaRetinalFeatures).*
