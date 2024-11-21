@@ -32,15 +32,7 @@ randomHMids = np.random.choice(HMids, 2000, replace=False)
 sampledHM = HM[HM.id.isin(randomHMids)]
 print(len(sampledHM), "eyes randomly sampled")
 bothEyesN = len(randomHMids) - (len(randomHMids)*2 - len(sampledHM))
-print(bothEyesN, "participants had both eyes present")
-print(len(randomHMids)-bothEyesN, "participants only had one eye present")
+print(bothEyesN, "participants had both eyes")
+print(len(randomHMids)-bothEyesN, "participants only had one eligible eye")
 
-### Save all 3024 images
-for name in tqdm(sampledHM.fundus):
-    eye = list(sampledHM[sampledHM.fundus == name].eye)[0]
-    if eye == 'RE':
-        data_dir = join('/mnt/project/Bulk/Retinal Optical Coherence Tomography', 'Fundus (right)', str(name[0:2]) )
-    elif eye == 'LE':
-        data_dir = join('/mnt/project/Bulk/Retinal Optical Coherence Tomography', 'Fundus (left)', str(name[0:2]) )
-    image = cv.imread(join(data_dir, name))
-    cv.imwrite(join("full", name), image )    
+
